@@ -1,43 +1,15 @@
-ion-card {
+ion-list {
   max-width: 32rem;
   margin: 1rem auto;
 }
 
-.counter-value {
-  margin: 2rem 0;
-  font-size: 4rem;
+ion-note {
+  font-size: 1.5rem;
   font-weight: 700;
-  line-height: 1;
+}
+
+.empty-state {
+  margin: 2rem auto;
+  color: var(--ion-color-medium);
   text-align: center;
-}
-
-.counter-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: center;
-}
-
-.counter-actions ion-button {
-  min-width: 6rem;
-}
-
-.counter-value {
-  font-size: 3.5rem;
-  font-weight: bold;
-  text-align: center;
-  margin: 1.5rem 0;
-  transition: color 0.2s ease-in-out;
-
-  &.is-zero {
-    color: var(--ion-color-medium, #92949c);
-  }
-
-  &.is-positive {
-    color: var(--ion-color-success, #2dd36f);
-  }
-}
-
-ion-button {
-  margin-top: 0.5rem;
 }

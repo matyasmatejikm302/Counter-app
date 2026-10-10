@@ -1,93 +1,29 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Počítadlo</ion-title>
+    <ion-title>CounterApp</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>{{ counterName || 'Bez názvu' }}</ion-card-title>
-    </ion-card-header>
+  <app-counter heading="Nové počítadlo" (saved)="onSaved($event)"></app-counter>
 
-    <ion-card-content>
-      <ion-item>
-        <ion-input
-          label="Název počítadla"
-          label-placement="floating"
-          [(ngModel)]="counterName"
-          placeholder="Zadejte název"
-        ></ion-input>
-      </ion-item>
+  @if (savedCounters.length > 0) {
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Uložená počítadla</ion-label>
+    </ion-list-header>
 
-      <ion-item>
-        <ion-input
-          label="Velikost kroku (step)"
-          label-placement="floating"
-          type="number"
-          min="1"
-          [(ngModel)]="step"
-        ></ion-input>
-      </ion-item>
-
-      <div class="counter-value" [class.is-zero]="count === 0" [class.is-positive]="count > 0">
-        {{ count }}
-      </div>
-
-      <!-- Tlačítka -->
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-button expand="block" (click)="decrement(1)" [disabled]="count === 0"
-              >-1</ion-button
-            >
-          </ion-col>
-          <ion-col>
-            <ion-button expand="block" (click)="increment(1)">+1</ion-button>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col>
-            <ion-button
-              expand="block"
-              fill="outline"
-              (click)="decrement(5)"
-              [disabled]="count === 0"
-              >-5</ion-button
-            >
-          </ion-col>
-          <ion-col>
-            <ion-button expand="block" fill="outline" (click)="increment(5)">+5</ion-button>
-          </ion-col>
-        </ion-row>
-
-        <!-- Krokování -->
-        <ion-row>
-          <ion-col>
-            <ion-button
-              expand="block"
-              color="secondary"
-              (click)="decrement(step)"
-              [disabled]="count === 0"
-            >
-              -{{ step }}
-            </ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button expand="block" color="secondary" (click)="increment(step)">
-              +{{ step }}
-            </ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <!-- Reset -->
-      <ion-button expand="block" color="warning" (click)="reset()"> Vynulovat hodnotu </ion-button>
-
-      <ion-button expand="block" color="danger" fill="outline" (click)="resetAll()">
-        Vymazat vše (hodnotu i název)
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+    @for (counter of savedCounters; track counter.id) {
+    <ion-item>
+      <ion-label>
+        <h2>{{ counter.name }}</h2>
+        <p>{{ counter.id }}</p>
+      </ion-label>
+      <ion-note slot="end">{{ counter.value }}</ion-note>
+    </ion-item>
+    }
+  </ion-list>
+  } @else {
+  <p class="empty-state">Zatím nebylo uloženo žádné počítadlo.</p>
+  }
 </ion-content>
