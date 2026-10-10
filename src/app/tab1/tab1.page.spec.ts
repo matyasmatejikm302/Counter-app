@@ -36,9 +36,7 @@ describe('Tab1Page', () => {
     component.reset();
     fixture.detectChanges();
 
-    const value = fixture.nativeElement.querySelector(
-      '.counter-value',
-    ) as HTMLElement;
+    const value = fixture.nativeElement.querySelector('.counter-value') as HTMLElement;
 
     expect(component.count).toBe(0);
     expect(value.textContent?.trim()).toBe('0');

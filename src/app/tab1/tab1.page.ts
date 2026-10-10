@@ -1,51 +1,67 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
-  IonButton,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
   IonCard,
-  IonCardContent,
   IonCardHeader,
   IonCardTitle,
-  IonContent,
-  IonHeader,
+  IonCardContent,
+  IonItem,
   IonInput,
-  IonTitle,
-  IonToolbar,
+  IonButton,
+  IonGrid,
+  IonRow,
+  IonCol,
 } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
+  standalone: true,
   imports: [
     FormsModule,
-    IonButton,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
     IonCard,
-    IonCardContent,
     IonCardHeader,
     IonCardTitle,
-    IonContent,
-    IonHeader,
+    IonCardContent,
+    IonItem,
     IonInput,
-    IonTitle,
-    IonToolbar,
+    IonButton,
+    IonGrid,
+    IonRow,
+    IonCol,
   ],
 })
 export class Tab1Page {
-  counterName = '';
-  count = 0;
+  counterName: string = 'Moje počítadlo';
+  count: number = 0;
+  step: number = 1;
 
-  increment(): void {
-    this.count++;
+  increment(amount: number = 1): void {
+    const safeAmount = Math.max(1, Number(amount) || 1);
+    this.count += safeAmount;
   }
 
-  decrement(): void {
-    if (this.count > 0) {
-      this.count--;
-    }
+  decrement(amount: number = 1): void {
+    const safeAmount = Math.max(1, Number(amount) || 1);
+    this.count = Math.max(0, this.count - safeAmount);
   }
 
   reset(): void {
     this.count = 0;
+  }
+
+  resetAll(): void {
+    this.count = 0;
+    this.counterName = '';
+    this.step = 1;
   }
 }

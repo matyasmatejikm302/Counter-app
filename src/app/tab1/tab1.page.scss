@@ -21,3 +21,23 @@ ion-card {
 .counter-actions ion-button {
   min-width: 6rem;
 }
+
+.counter-value {
+  font-size: 3.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1.5rem 0;
+  transition: color 0.2s ease-in-out;
+
+  &.is-zero {
+    color: var(--ion-color-medium, #92949c);
+  }
+
+  &.is-positive {
+    color: var(--ion-color-success, #2dd36f);
+  }
+}
+
+ion-button {
+  margin-top: 0.5rem;
+}
