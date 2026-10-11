@@ -5,42 +5,59 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  @if (!counterService.initialized()) {
-  <div class="state-message">
-    <ion-spinner></ion-spinner>
-    <p>Načítám historii…</p>
-  </div>
-  } @else if (counterService.counters().length === 0) {
-  <p class="state-message">Historie je zatím prázdná.</p>
-  } @else {
-  <div class="history-header">
-    <p>Počet záznamů: {{ counterService.counters().length }}</p>
-    <ion-button color="danger" fill="outline" size="small" (click)="clear()">
-      Vymazat vše
-    </ion-button>
-  </div>
+  <!-- Indiduální fuknce: Min/Max -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Statistika uložených hodnot</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6">
+            <ion-label color="medium">Minimum:</ion-label>
+            <h2 style="font-size: 1.6rem; font-weight: bold; margin-top: 4px">
+              {{ minValue() !== null ? minValue() : '–' }}
+            </h2>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label color="medium">Maximum:</ion-label>
+            <h2 style="font-size: 1.6rem; font-weight: bold; margin-top: 4px">
+              {{ maxValue() !== null ? maxValue() : '–' }}
+            </h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
+  <!-- Seznam historie počítadel -->
+  @if (counterService.counters().length > 0) {
   <ion-list>
+    <ion-list-header>
+      <ion-label>Uložená počítadla ({{ counterService.counters().length }})</ion-label>
+      <ion-button color="danger" fill="clear" (click)="clearAll()">Vymazat vše</ion-button>
+    </ion-list-header>
+
     @for (counter of counterService.counters(); track counter.id) {
     <ion-item>
       <ion-label>
         <h2>{{ counter.name }}</h2>
-        <p>{{ counter.createdAt | date: 'd. M. y, HH:mm' }}</p>
+        <p>{{ counter.createdAt }}</p>
       </ion-label>
 
-      <ion-note slot="end">{{ counter.value }}</ion-note>
+      <ion-note slot="end" style="font-size: 1.2rem; font-weight: bold">
+        {{ counter.value }}
+      </ion-note>
 
-      <ion-button
-        slot="end"
-        color="danger"
-        fill="clear"
-        aria-label="Odstranit záznam"
-        (click)="remove(counter.id)"
-      >
-        Odstranit
+      <ion-button fill="clear" color="danger" slot="end" (click)="removeItem(counter.id)">
+        <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-item>
     }
   </ion-list>
+  } @else {
+  <p class="empty-state ion-text-center ion-padding" style="color: var(--ion-color-medium)">
+    Zatím nebyla uložena žádná počítadla.
+  </p>
   }
 </ion-content>

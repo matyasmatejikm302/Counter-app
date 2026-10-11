@@ -1,17 +1,26 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
 import {
   IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
+  IonIcon,
   IonItem,
   IonLabel,
   IonList,
+  IonListHeader,
   IonNote,
-  IonSpinner,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from '@ionic/angular';
+import { addIcons } from 'ionicons';
+import { trashOutline } from 'ionicons/icons';
 import { CounterService } from '../services/counter.service';
 
 @Component({
@@ -19,31 +28,56 @@ import { CounterService } from '../services/counter.service';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   imports: [
-    DatePipe,
     IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCol,
     IonContent,
+    IonGrid,
     IonHeader,
+    IonIcon,
     IonItem,
     IonLabel,
     IonList,
+    IonListHeader,
     IonNote,
-    IonSpinner,
+    IonRow,
     IonTitle,
     IonToolbar,
   ],
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page {
   readonly counterService = inject(CounterService);
 
-  async ngOnInit(): Promise<void> {
-    await this.counterService.initialize();
+  constructor() {
+    addIcons({ trashOutline });
   }
 
-  async remove(id: string): Promise<void> {
+  // Výpočet minimální hodnoty
+  readonly minValue = computed(() => {
+    const list = this.counterService.counters();
+    if (list.length === 0) {
+      return null;
+    }
+    return Math.min(...list.map((c) => c.value));
+  });
+
+  // Výpočet maximální hodnoty
+  readonly maxValue = computed(() => {
+    const list = this.counterService.counters();
+    if (list.length === 0) {
+      return null;
+    }
+    return Math.max(...list.map((c) => c.value));
+  });
+
+  async removeItem(id: string): Promise<void> {
     await this.counterService.remove(id);
   }
 
-  async clear(): Promise<void> {
+  async clearAll(): Promise<void> {
     await this.counterService.clear();
   }
 }
