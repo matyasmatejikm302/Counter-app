@@ -40,7 +40,6 @@ export class CounterComponent implements OnInit {
   }
 
   reset(): void {
-    
     this.count = Number(this.initialValue()) || 0;
   }
 

@@ -27,9 +27,7 @@ export class CounterService {
 
   async remove(id: string): Promise<void> {
     await this.initialize();
-    this.countersState.update((counters) =>
-      counters.filter((counter) => counter.id !== id),
-    );
+    this.countersState.update((counters) => counters.filter((counter) => counter.id !== id));
     await this.persist();
   }
 

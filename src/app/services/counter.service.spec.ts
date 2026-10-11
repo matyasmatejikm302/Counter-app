@@ -120,9 +120,7 @@ describe('CounterService', () => {
       value: 'this is not a valid JSON',
     });
 
-    const errorSpy = vi
-      .spyOn(console, 'error')
-      .mockImplementation(() => undefined);
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
     await service.initialize();
 
@@ -130,7 +128,7 @@ describe('CounterService', () => {
     expect(service.initialized()).toBe(true);
     expect(errorSpy).toHaveBeenCalledWith(
       'Historii počítadel se nepodařilo načíst.',
-      expect.any(Error)
+      expect.any(Error),
     );
 
     errorSpy.mockRestore();
@@ -142,9 +140,7 @@ describe('CounterService', () => {
       value: JSON.stringify({ name: 'test' }),
     });
 
-    const errorSpy = vi
-      .spyOn(console, 'error')
-      .mockImplementation(() => undefined);
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => undefined);
 
     await service.initialize();
 
@@ -152,7 +148,7 @@ describe('CounterService', () => {
     expect(service.initialized()).toBe(true);
     expect(errorSpy).toHaveBeenCalledWith(
       'Historii počítadel se nepodařilo načíst.',
-      expect.any(Error)
+      expect.any(Error),
     );
 
     errorSpy.mockRestore();
