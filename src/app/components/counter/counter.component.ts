@@ -17,7 +17,6 @@ import { SavedCounter } from '../../models/saved-counter';
   imports: [FormsModule, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonInput],
 })
 export class CounterComponent implements OnInit {
-  // 2. implements OnInit
   readonly heading = input('Nové počítadlo');
   readonly initialValue = input(0);
 
@@ -27,7 +26,6 @@ export class CounterComponent implements OnInit {
   count = 0;
 
   ngOnInit(): void {
-    // Inicializace výchozí hodnotou
     this.count = Number(this.initialValue()) || 0;
   }
 
@@ -42,7 +40,7 @@ export class CounterComponent implements OnInit {
   }
 
   reset(): void {
-    // Reset na výchozí hodnotu
+    
     this.count = Number(this.initialValue()) || 0;
   }
 
@@ -57,9 +55,10 @@ export class CounterComponent implements OnInit {
       id: crypto.randomUUID(),
       name,
       value: this.count,
+      createdAt: new Date().toISOString(),
     });
 
     this.counterName = '';
-    this.count = Number(this.initialValue()) || 0;
+    this.count = 0;
   }
 }

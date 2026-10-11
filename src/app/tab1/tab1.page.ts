@@ -1,57 +1,19 @@
-import { Component } from '@angular/core';
-import {
-  IonButton,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonListHeader,
-  IonNote,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/angular';
-import { addIcons } from 'ionicons';
-import { trashOutline } from 'ionicons/icons';
+import { Component, inject } from '@angular/core';
+import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular';
 import { CounterComponent } from '../components/counter/counter.component';
 import { SavedCounter } from '../models/saved-counter';
+import { CounterService } from '../services/counter.service';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
-  imports: [
-    CounterComponent,
-    IonButton,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonNote,
-    IonTitle,
-    IonToolbar,
-  ],
+  imports: [CounterComponent, IonContent, IonHeader, IonTitle, IonToolbar],
 })
 export class Tab1Page {
-  savedCounters: SavedCounter[] = [];
+  private readonly counterService = inject(CounterService);
 
-  constructor() {
-    addIcons({ trashOutline });
-  }
-
-  onSaved(counter: SavedCounter): void {
-    this.savedCounters.unshift(counter);
-  }
-
-  removeCounter(id: string): void {
-    this.savedCounters = this.savedCounters.filter((c) => c.id !== id);
-  }
-
-  get totalSum(): number {
-    return this.savedCounters.reduce((sum, c) => sum + (Number(c.value) || 0), 0);
+  async onSaved(counter: SavedCounter): Promise<void> {
+    await this.counterService.add(counter);
   }
 }
