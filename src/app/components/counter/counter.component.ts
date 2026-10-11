@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, OnInit, input, output } from '@angular/core'; // 1. přidán OnInit
 import { FormsModule } from '@angular/forms';
 import {
   IonButton,
@@ -16,12 +16,20 @@ import { SavedCounter } from '../../models/saved-counter';
   styleUrls: ['./counter.component.scss'],
   imports: [FormsModule, IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonInput],
 })
-export class CounterComponent {
+export class CounterComponent implements OnInit {
+  // 2. implements OnInit
   readonly heading = input('Nové počítadlo');
+  readonly initialValue = input(0);
+
   readonly saved = output<SavedCounter>();
 
   counterName = '';
   count = 0;
+
+  ngOnInit(): void {
+    // Inicializace výchozí hodnotou
+    this.count = Number(this.initialValue()) || 0;
+  }
 
   increment(): void {
     this.count++;
@@ -34,7 +42,8 @@ export class CounterComponent {
   }
 
   reset(): void {
-    this.count = 0;
+    // Reset na výchozí hodnotu
+    this.count = Number(this.initialValue()) || 0;
   }
 
   save(): void {
@@ -51,6 +60,6 @@ export class CounterComponent {
     });
 
     this.counterName = '';
-    this.count = 0;
+    this.count = Number(this.initialValue()) || 0;
   }
 }
